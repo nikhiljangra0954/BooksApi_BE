@@ -17,18 +17,15 @@ userRouter.post("/register", async (req: Request, res: Response) => {
   const { name, email, password, role } = req.body;
   if (!name || !email || !password) {
       res.status(206).send("Please fill all the details");
-    logger.warn(
-        `Method : ${req.method} - StatusCode: 206 - Route: ${req.route}{ "MSG": "User already exist" }`
-      );
   } else {
     try {
       // find the user by email in batabase
       const user = await UserModel.findOne({ email });
       if (user) {
+          res.send("User already registered Please login");
         logger.warn(
             `Method : ${req.method} { "MSG": "User already exist" } ${req.url}`
           );
-        res.send("User already registered Please login");
       } else {
         // get the details and save to database
         bcrypt.hash(
@@ -49,10 +46,10 @@ userRouter.post("/register", async (req: Request, res: Response) => {
                 role,
               });
               await new_user.save();
-              res.status(200).send({ msg: "User saved successfully" });
               logger.info(
                 `Method : ${req.method} StatusCode : 200 { "MSG": "User saved successfully" }`
               );
+              res.status(200).send({ msg: "User saved successfully" });
             }
           }
         );

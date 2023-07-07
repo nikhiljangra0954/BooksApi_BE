@@ -1,0 +1,7 @@
+warn: Jul-07-2023 15:32:55: 	Method : POST { "MSG": "User already exist" } /register
+warn: Jul-07-2023 15:32:55: 	Method : POST { "MSG": "User already exist" } /register
+warn: Jul-07-2023 15:33:02: 	Method : POST { "MSG": "User already exist" } /register
+warn: Jul-07-2023 15:33:02: 	Method : POST { "MSG": "User already exist" } /register
+info: Jul-07-2023 15:33:11: 	Method : POST StatusCode : 200 { "MSG": "User saved successfully" }
+warn: Jul-07-2023 15:34:21: 	Method : POST { "MSG": "User already exist" } /register
+warn: Jul-07-2023 15:34:21: 	Method : POST { "MSG": "User already exist" } /register
