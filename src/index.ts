@@ -5,8 +5,11 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const { connection } = require("./Config/db")
 const { userRouter } = require('./Routes/user.Routes.ts')
-const { authentication } = require("./authmiddleware/auth.middleware.ts")
+const { authentication } = require("./authmiddleware/auth.middleware.ts");
+const {rolebasedauth} = require("./authmiddleware/Role.middleware.ts")
+
 const { UserModel } = require('./model/user.Model.ts')
+const {bookRouter} = require("./Routes/books.Routes.ts")
 require("dotenv").config()
 const app = express();
 app.use(cors())
@@ -18,22 +21,9 @@ app.get("/", (req: any, res: any) => {
 })
 
 app.use("/", userRouter)
-// app.use(authentication)
-app.get("/checkauth", authentication, async (req: Request, res: Response) => {
-    const {userID} =  req.body
-    try {
-        if (!userID) {
-            res.send("Please enter valid user ID")
-        } else {
-            const user = await UserModel.find({ _id: userID })
-            res.send(user)
-        }
-    } catch (error) {
-        res.json(error.message)
-    }
-
-})
-
+app.use(authentication)
+app.use(rolebasedauth)
+app.use("/",bookRouter)
 app.listen(process.env.port, async () => {
     try {
         await connection

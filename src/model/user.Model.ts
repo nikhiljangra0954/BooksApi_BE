@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
     },
     password: { type: String, required: true },
     role: {
-        type: String,
+        type: [String],
         required: true,
         default: "VIEWER",
         enum: ["VIEWER", "CREATOR", "VIEW_ALL"]

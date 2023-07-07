@@ -15,8 +15,11 @@ const authentication = async function (req: Request, res: Response, next: NextFu
         console.log(decoded)
         if (decoded) {
             const userID = decoded.userID
+            const roles = decoded.role
             // now send this userID to the body
             req.body.userID = userID
+            req.body.roles = roles
+
             next()
         } else {
             res.json("Decoding of token failed")

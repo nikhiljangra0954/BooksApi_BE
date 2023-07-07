@@ -24,7 +24,7 @@ userRouter.post("/register", async (req: Request, res: Response) => {
                 res.send("User already registered Please login")
             } else {
                 // get the details and save to database
-                bcrypt.hash(password, 3, async function (err : Error, hash_pass: any) {
+                bcrypt.hash(password, 3, async function (err : Error, hash_pass: string) {
                     // Store hash in your password DB.
                     if (err) {
                         res.send({ msg: err.message })
@@ -56,10 +56,10 @@ userRouter.post("/login", async function(req: Request , res : Response){
             }else{
              let  hashpassword = user.password
              // comapre the password and generate the token
-             bcrypt.compare(password, hashpassword, async function(err : Error, result : any) {
+             bcrypt.compare(password, hashpassword, async function(err : Error, result : string) {
                  // result == true
                  if(result){
-                     const token = jwt.sign({userID : user._id}, 'nikhil');
+                     const token = jwt.sign({userID : user._id , role : user.role}, 'nikhil');
                      res.status(200).send({msg:"login success",token : token});
                  }else{
                      res.status(401).send({msg:"login failed"})
